@@ -72,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
     private ExoPlayerServices mExoPlayerService;
     private ExoPlayerReceiver mExoPlayerReceiver;
     private boolean mBound;
+
+	//Replace your latest stream url my stream works for only 15 days.
+    private String radio_strem_url ="http://testrocks.out.airtime.pro:8000/testrocks_b";
+    private String get_latest_stream_shows= "http://testrocks.airtime.pro/api/live-info-v2?shows=10";
     /**
      * SignalR Service to class level receiver connection
      */
@@ -134,16 +138,16 @@ public class MainActivity extends AppCompatActivity {
                 Util.getUserAgent(this, "mediaPlayerSample"), defaultBandwidthMeter);
 
 
-        mediaSource = new ExtractorMediaSource(Uri.parse("http://testrocks.out.airtime.pro:8000/testrocks_b"), dataSourceFactory, extractorsFactory, null, null);
+        mediaSource = new ExtractorMediaSource(Uri.parse(radio_strem_url), dataSourceFactory, extractorsFactory, null, null);
 
         player = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
 
         player.prepare(mediaSource);
 
-        String url = "http://testrocks.airtime.pro/api/live-info-v2?shows=10";
+       
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest stringRequest = new JsonObjectRequest(get_latest_stream_shows, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 List<CurrentPlayModel> upComingPlayList = new ArrayList<>();
